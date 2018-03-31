@@ -2,15 +2,12 @@
 FROM ubuntu:16.04
 MAINTAINER  Josh Keife <jkeife@gmail.com>
 
-# Setup APT
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-
 # Update, Install Prerequisites
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && \
-  apt-get install -y vim sudo wget perl gcc g++ make automake libtool autoconf m4 gcc-multilib && \
-  apt-get install -y language-pack-en-base software-properties-common python-software-properties && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+RUN apt-get -y update && \
+    apt-get install -y sudo wget perl gcc g++ make automake libtool autoconf \
+                     m4 gcc-multilib language-pack-en-base \
+                     software-properties-common python-software-properties && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Setup User
 RUN useradd -d /data -s /bin/bash --uid 1000 minecraft
